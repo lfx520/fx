@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="stylesheet" type="text/css" href="./css/homework3.css">
+	<script type="text/javascript">
+		!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/10;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=a.navigator.userAgent,q=(!!p.match(/android/gi),!!p.match(/iphone/gi)),r=q&&!!p.match(/OS 9_3/),s=a.devicePixelRatio;i=q&&!r?s>=3&&(!i||i>=3)?3:s>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var t=e.createElement("div");t.appendChild(g),e.write(t.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));
+	</script>
+</head>
+<body>
+	<div class="total">
+		<div class="top"></div>
+		<div class="food"></div>
+		<div class="photos">
+			<div class="view">
+				<div class="dot" id="dotlast"></div>
+				<div class="dot"></div>
+				<div class="dot"></div>
+				<div class="dot"></div>
+			</div>
+		</div>
+		<div class="containter">
+			<div class="main_containter">
+				<div class="litle_containter"id="month">
+					<div class="yuan">
+						<i class="iconfont">&#xe60c;</i>
+					</div>
+					<div class="words">本月推荐</div>
+				</div>
+				<div class="litle_containter"id="vips">
+					<div class="yuan" id="vipcolor">
+						<i class="iconfont">&#xe668;</i>
+					</div>
+					<div class="words">VIP专享</div>
+				</div>
+				<div class="litle_containter"id="gift">
+					<div class="yuan"id="giftcolor">
+						<i class="iconfont" id="giftlogo">&#xe6fe;</i>
+					</div>
+					<div class="words">礼盒精选</div>
+				</div>
+				<div class="litle_containter"id="dispatching">
+					<div class="yuan"id="dispactchcolor">
+						<i class="iconfont">&#xe659;</i>
+					</div>
+					<div class="words">配送说明</div>
+				</div>
+				<div class="litle_containter"id="recommend">
+					<div class="yuan"id="recommendcolor">
+						<i class="iconfont">&#xf0024;</i>
+					</div>
+					<div class="words">推荐食谱</div>
+				</div>
+				<div class="litle_containter"id="service">
+					<div class="yuan"id="servicecolor">
+						<i class="iconfont">&#xe6d3;</i>
+					</div>
+					<div class="words">服务指南</div>
+				</div>
+			</div>
+			<div class="about" >
+				<div class="abouts">
+					<div class="kuang">
+						<img class="logoss" src="./image/compny.png">
+					</div>
+					<p class="chinese">公司发布</p>
+					<p class="englishs">enter text</p>
+				</div>
+				<div class="abouts" id="aboutus">
+					<div class="kuang" id="kuangus">
+						<img class="logoss" src="./image/our.png">
+					</div>
+					<p class="chinese">关于我们</p>
+					<p class="englishs">enter text</p>
+				</div>
+
+			</div>
+		</div>
+		<div class="footer">
+			<ul class="footernav">
+				<li class="navli" id="home">
+					<img class="place" src="./image/home.png">
+					<div class="word">首页</div>
+				</li>
+				<li class="navli" id="shop">
+					<img class="place"id="shops" src="./image/shop.png">
+					<div class="word">购物车</div>
+				</li>
+				<li class="navli" id="product">
+					<img class="place" src="./image/product.png">
+					<div class="word">产品中心</div>
+				</li>
+				<li class="navli" id="vipe">
+					<img class="place" src="./image/vip.png">
+					<div class="word">会员中心</div>
+				</li>
+				<li class="navli" id="more">
+					<img class="placemore" src="./image/more.png">
+					<div class="word">更多</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
