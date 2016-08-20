@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		*{
+		    margin: 0 auto;
+		    padding: 0;
+		    font-family: "Microsoft YaHei","sans-serif";
+		}
+		header{
+			margin: 0 auto;
+			width: 300px;
+			height: 100px;
+			text-align: center;
+		}
+		a{
+			text-decoration: none;
+		}
+		.container{
+			margin: 0 auto;
+			width: 300px; 
+			height: auto;
+			text-align: center;
+		 }
+		h4{
+		 	text-align: left;
+		}
+		.content{
+			width: 300px;
+			margin: 0 auto;
+		}
+	    ul li{
+	    	list-style: none;
+	    	float: left;
+	    }
+	</style>
+</head>
+<body>
+	<header>
+		<h3>hello,{{username}},这里是留言板</h3>
+		<a href="./login.hbs" class="sign">登录</a>
+		<a href="./sign.hbs" class="sign">注册</a>
+	</header>
+	<div class="container">
+	    
+	    <textarea rows="5" cols="30"name="publish" id="message" value="" class="txt"></textarea>
+	       
+	    <button id="btn">提交留言</button>
+	        
+         <h4>留言（{{count}}）</h4>
+    </div>
+    <div class="content">
+        <ul>
+            {{#each btn}}
+            <li>
+                <div class="content-publish">
+                    <h3>{{username}}</h3>
+                    <p id="details">{{publish}}</p>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+
+   
+</body>
+	 
+
+</script>
+</html>
+
