@@ -1,0 +1,81 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+#container{
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+#gamepanel{
+	width: 320px;
+	margin: 0 auto;
+	height: 568px;
+	position: relative;
+	overflow: hidden;
+}
+@media screen and (min-width: 1024px) {
+	#gamepanel, body, html{
+		width: 320px;
+		margin: 0 auto;
+	}
+}
+#guidePanel {
+	background: rgba(0,0,0,0.6) url(image/start.png) center 50% no-repeat;
+	background-size: 219px 219px;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 10000
+}
+#gameoverPanel {
+	background: rgba(0,0,0,0.8) url(image/gameover.jpg) center 30% no-repeat;
+	background-size: 320px 568px;
+	top: 0
+}
+
+#gameoverPanel,#resultPanel {
+	display: none;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	z-index: 10000
+}
+
+#resultPanel{
+	background:url(image/paodao.jpg) center top no-repeat;
+	background-size: 320px 568px;
+}
+#resultPanel,#resultPanel .weixin-share {
+	left: 0;
+	top: 0
+}
+#resultPanel .replay {
+	background: url(image/replay.png) 0 0 no-repeat;
+	height: 36px;
+	line-height: 36px;
+	left: 16px;
+	overflow: hidden;
+	position: absolute;
+	top: 11px;
+	width: 86px;
+	z-index: 10;
+	color: #E44324;
+	text-align: right;
+	padding-right: 6px;
+	font-weight: 700;
+	font-size: 12px;
+}
+
+#scorecontent{
+	font-size: 16px;
+	font-weight: 700;
+	color: #FFF;
+	text-align: center;
+	line-height: 1.8em;
+	margin-top: 5px;
+}
