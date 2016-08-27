@@ -1,102 +1,151 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <meta charset="utf-8" />
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		#progress_bar{
+			height: 100%;
+			width: 0;
+			background: #2FB0FF;
+			border-radius: 2px;
+
+		}
+		#bar{
+			width: 340px;
+			height: 10px;
+			border-radius: 2px;
+			border: 1px solid #A3A3A3;
+		}
+	</style>
 </head>
 <body>
-    <input type="file" value="" name="excel" id="file" />
-    <button id="upload" title="开始上传">开始上传</button>
-    <button id="pause" >暂停</button>
-    <button id="continues" >继续</button>
-    <div id="file-name"></div>
-    <progress id="uploadprogress" min="0" max="100" value="0">0</progress>
-    <div class="image"></div>
-    <script>
-    (function(){    
-        var file = document.querySelector('#file');
-        var upload = document.querySelector('#upload');
-        var pause = document.querySelector('#pause');
-        var continues = document.querySelector('#continues');
-        var uploadprogress = document.querySelector('#uploadprogress');
-        var image = document.querySelector('.image');
-        
-        upload.addEventListener('click', function(){
-            var type = /^image\//;
-            type.test(file.files[0].type) 
-            var reader = new FileReader();
-            reader.readAsDataURL(file.files[0]);
-           
-            $('#pause, progress').removeClass('hide');
-            $.get('countsize.php?filename=' + encodeURIComponent(file.name), function (response) {
-                currentPosition = response[file.name.replace(/\.\w+$/, '')];
-                if (currentPosition == 0) {
-                showProgress(currentPosition, file.size);
-                upload(file);
-            } 
-            else if (currentPosition == file.size) {
-                $('#pause, .progress').addClass('hide');
-                alert('此文件已经上传完成!');
-            }
-            else if (currentPosition < file.size) {
-                alert('此文件已经上传了' + Math.floor((currentPosition / file.size) * 100) + '%, 现在将继续上传!');
-                $('#uploadprogress').width(currentPosition / file.size * 100 + '%');
-                showProgress(currentPosition, file.size);
-                upload(file);
-                        }
-            }, 'json');
-        });
-
-    pause.addEventListener('click', function () {
-        pause = !pause;
-    })
-    continues.addEventListener('click', function () {
-        pause = !pause;
-        upLoad(inputFile.files[0]);
-    });
-    function upload(file) {
-                var formData = new FormData();
-                    formData.append("fileName", encodeURIComponent(file.name));
-                    formData.append("filePart", file.slice(currentPosition, currentPosition + partSize));
-                $.ajax({
-                    type: 'POST',
-                    url: 'upload.php',
-                    data: formData,
-                    contentType: false, // 
-                    processData: false, // 
-                    // 设置 xhr 对象，增加 onprogress 事件
-                    xhr: function() {
-                        var xhr = $.ajaxSettings.xhr();
-                        xhr.upload.onprogress = function (event) {
-                            showProgress(currentPosition + event.loaded, file.size);
-                        }
-                        return xhr
-                    },
-                    success: function () {
-                        // 每上传完一部分就改变当前位置
-                        currentPosition += partSize;
-                        if (currentPosition < file.size) {
-                            if (!pause) {
-                                setTimeout(function () {
-                                    upload(file);
-                                }, 300);
-                            }
-                        } else {
-                            $('#pause, #uploadprogress').addClass('hide')
-                            alert('上传结束');
-                        }
-                    },
-                    error: function () {
-                        alert('上传错误');
-                    }
-                });
-            }})
-
-    </script>
-
-
+	<input type="file" id="file" />
+	<button id="up">上传</button>
+	<button id="pause">暂停</button>
+	<input type="button" value="浏览" onclick="readAsDataURL()"/>
+	<p id="imfor"></p>
+	<div id="progress_bar">
+		<div id="bar"></div>
+	</div>
+	<div id="result" name="result"></div>
 </body>
+	<script type="text/javascript">
+		(function () {
+		    function $ (selector) {
+		        if (document.querySelectorAll(selector).length === 1) {
+		            return document.querySelector(selector);
+		        } else {
+		            return document.querySelectorAll(selector);
+		        }
+		    }
+
+		    var result = document.querySelector('#result');
+		    var file,
+		        partSize = 1024 * 2, // 每一段的大小
+				currentPosition = 0, // 当前位置
+				pause = false;       // 是否暂停
+
+		    $('#file').addEventListener('change', function () {
+		        file = this.files[0];       
+		        $('#imfor').innerHTML = '文件 ' + file.name + ' 的长度: ' + file.size + ' 字节';
+		    });
+
+		    $('#up').addEventListener('click', function () {
+		        
+		         upload(file);
+		    });
+
+		    $('#pause').addEventListener('click', function () {
+		         var self = $('#pause');
+		         if (pause) {
+		            self.innerHTML = '暂停';
+		         } else {
+		            self.innerHTML = '继续';
+		         }
+		         pause = !pause;
+		    })
+
+		    function upload (file) {
+		        var formData = new FormData();
+
+		        formData.append("fileName", encodeURIComponent(file.name));
+		        formData.append('filePart', file.slice(currentPosition, currentPosition + partSize));
+
+		        var xhr = new XMLHttpRequest();
+
+		        xhr.upload.addEventListener('progress', function (e) {
+		            $('#bar').style.width = (currentPosition + e.loaded) / file.size * 100 + '%';
+		        }, false);
+
+		        xhr.open("POST", "./upload", true);
+
+		        xhr.onreadystatechange=function() {
+		            if (xhr.readyState === 4 && xhr.status === 200) {
+		        console.log('in');
+		                currentPosition += partSize;
+		                if (currentPosition < file.size) {
+		                    if (!pause) {
+		                        setTimeout(function () {
+		                            var percent = currentPosition / file.size;
+		                            $('#bar').style.width = percent;
+		                            upload(file);
+		                        }, 300);
+		                    }
+		                } else {
+		                    $('#progress-bar, .pause').style.display = 'none';
+		                    alert('上传成功!');
+		                }
+		            }
+		        }
+
+		        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+		        var  a = formData.getAll('fileName')[0];
+		        var  b = formData.getAll('filePart')[0];
+		        xhr.send(null);
+		    }
+		    function readAsDataURL(){  
+		        //检验是否为图像文件  
+		        var file = document.querySelector("#file").files[0];  
+		        if(!/image\/\w+/.test(file.type)){  
+		        	alert("看清楚，这个需要图片！");  
+		        	return false;  
+		        }  
+		        var reader = new FileReader();  
+		        //将文件以Data URL形式读入页面  
+		        reader.readAsDataURL(file);  
+		        reader.onload=function(e){  
+		        	var resultURL = e.target.result;
+		        	
+		        	var image = new Image();  
+		            image.src = resultURL;
+		        	image.onload = function(){ 
+		            //创建一个image对象，给canvas绘制使用  
+		            	var cvs = document.createElement('canvas');  
+		            	var scale = 1;    
+		            	if(this.width > 1000 || this.height > 1000){  
+		            //1000只是示例，可以根据具体的要求去设定    
+		                	if(this.width > this.height){    
+		                    	scale = 1000 / this.width;  
+		                	}else{    
+		                    	scale = 1000 / this.height;    
+		                	}    
+		            	}  
+		    		    cvs.width = this.width*scale;    
+		    		    cvs.height = this.height*scale;    
+		    		    //计算等比缩小后图片宽高  
+		    		    var ctx = cvs.getContext('2d');    
+		    		    ctx.drawImage(this, 0, 0, cvs.width, cvs.height);     
+		    		    newImageData = cvs.toDataURL(file.type, 0.5); 
+		    			console.log(resultURL.length,newImageData.length);
+		    			var result=document.querySelector("#result");  
+		    		    //显示文件  
+		    		    result.innerHTML='<img src="' + newImageData +'" alt="" />';  
+		        	}
+		        }  
+		    }  
+		})();
+
+	</script>
 </html>
-
-
-
